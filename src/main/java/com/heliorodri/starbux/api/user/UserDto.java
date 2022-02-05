@@ -5,14 +5,23 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
+
 @Getter
 @Setter
 @Builder
-public class UserDTO {
+public class UserDto {
 
+    @NotNull
     private String name;
+
+    @NotNull
     private String email;
+
+    @NotNull
     private String password;
+
+    @NotNull
     private Role role;
 
 }

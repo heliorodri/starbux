@@ -1,7 +1,7 @@
-package com.heliorodri.starbux.domain.cart;
+package com.heliorodri.starbux.domain.user_drink;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.heliorodri.starbux.domain.user_drink.UserDrink;
+import com.heliorodri.starbux.domain.drink.Drink;
+import com.heliorodri.starbux.domain.topping.Topping;
 import com.heliorodri.starbux.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,30 +14,34 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import java.util.List;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class Cart {
+public class UserDrink {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnore
-    @OneToOne(targetEntity = User.class)
-    @JoinColumn(nullable = false, name = "user_id", referencedColumnName = "id")
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "user_drink_id", referencedColumnName = "id")
-    private UserDrink userDrink;
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    private Drink drink;
 
-    private Integer quantity;
+    @ManyToMany
+    @JoinColumn(name = "topping_id", referencedColumnName = "id")
+    private List<Topping> toppings;
 
 }

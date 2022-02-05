@@ -1,4 +1,4 @@
-package com.heliorodri.starbux.api.product;
+package com.heliorodri.starbux.api.drink;
 
 import lombok.Builder;
 import lombok.Data;
@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @Builder
-public class ProductDto {
+public class DrinkDto {
 
     private Long id;
 

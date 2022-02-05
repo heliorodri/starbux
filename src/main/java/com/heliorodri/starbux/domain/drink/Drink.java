@@ -1,5 +1,6 @@
-package com.heliorodri.starbux.domain.product;
+package com.heliorodri.starbux.domain.drink;
 
+import com.heliorodri.starbux.domain.topping.Topping;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,18 +11,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
-@Table(name = "product")
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
-public class Product {
+@AllArgsConstructor
+@NoArgsConstructor
+public class Drink {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,5 +34,9 @@ public class Product {
 
     @NotNull
     private Double price;
+
+    @OneToMany
+    @JoinColumn(name = "topping_id", referencedColumnName = "id")
+    private List<Topping> toppings;
 
 }

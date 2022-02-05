@@ -1,8 +1,8 @@
-package com.heliorodri.starbux.domain.product;
+package com.heliorodri.starbux.domain.drink;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Long> {
+public interface DrinkRepository extends JpaRepository<Drink, Long> {
 }
