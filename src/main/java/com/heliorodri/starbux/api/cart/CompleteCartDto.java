@@ -10,7 +10,7 @@ import java.util.List;
 @Setter
 @Getter
 @Builder
-public class CartItemsDto {
+public class CompleteCartDto {
 
     private List<CartItemDto> cartItems;
     private double totalCost;

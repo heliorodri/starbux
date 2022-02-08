@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 @Component
 public class UserMapper {
 
-    public User toEntityRequest(UserDto dto) {
+    public User toEntity(UserDto dto) {
         return User.builder()
                 .name(dto.getName())
                 .email(dto.getEmail())
@@ -18,7 +18,7 @@ public class UserMapper {
                 .build();
     }
 
-    public User toEntityRequest(UserSignInRequest dto) {
+    public User toEntity(UserSignInRequest dto) {
         return User.builder()
                 .email(dto.getEmail())
                 .password(dto.getPassword())
@@ -26,10 +26,10 @@ public class UserMapper {
     }
 
     public List<UserResponse> toResponseList(List<User> users) {
-        return users.stream().map(this::toReponse).collect(Collectors.toList());
+        return users.stream().map(this::toResponse).collect(Collectors.toList());
     }
 
-    public UserResponse toReponse(User user) {
+    public UserResponse toResponse(User user) {
         return UserResponse.builder()
                 .id(user.getId())
                 .name(user.getName())

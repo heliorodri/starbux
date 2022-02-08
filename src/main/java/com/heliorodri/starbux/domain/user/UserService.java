@@ -3,6 +3,7 @@ package com.heliorodri.starbux.domain.user;
 import com.heliorodri.starbux.domain.authentication.Authentication;
 import com.heliorodri.starbux.domain.authentication.AuthenticationService;
 import com.heliorodri.starbux.domain.exception.InvalidOperationException;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public class UserService {
     private final UserRepository repository;
     private final AuthenticationService authenticationService;
 
-    public User signUp(User userToSignUp) throws NoSuchAlgorithmException, InvalidOperationException {
+    public User signUp(@NonNull User userToSignUp) throws NoSuchAlgorithmException, InvalidOperationException {
         if (repository.findByEmail(userToSignUp.getEmail()) != null) {
             throw new InvalidOperationException("User already exists");
         }
@@ -40,10 +41,10 @@ public class UserService {
         return createdUser;
     }
 
-    public String signIn(User userToSignIn) throws NoSuchAlgorithmException {
+    public String signIn(@NonNull User userToSignIn) throws NoSuchAlgorithmException {
         User user = repository.findByEmail(userToSignIn.getEmail());
         if(user == null){
-            throw new InvalidOperationException("user not present");
+            throw new InvalidOperationException("user not found");
         }
 
         if (!user.getPassword().equals(hashPassword(userToSignIn.getPassword()))){

@@ -1,5 +1,6 @@
 package com.heliorodri.starbux.domain.drink;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,11 +13,11 @@ public class DrinkService {
 
     private final DrinkRepository repository;
 
-    public Drink save(@NotNull Drink drink) {
+    public Drink save(@NonNull Drink drink) {
         return repository.save(drink);
     }
 
-    public void delete(@NotNull Long id) {
+    public void delete(@NonNull Long id) {
         repository.deleteById(id);
     }
 

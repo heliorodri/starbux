@@ -1,5 +1,6 @@
 package com.heliorodri.starbux.domain.topping;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,11 +12,11 @@ public class ToppingService {
 
     private final ToppingRepository repository;
 
-    public Topping create(Topping topping) {
+    public Topping create(@NonNull Topping topping) {
         return repository.save(topping);
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(@NonNull Long id) {
         repository.deleteById(id);
     }
 

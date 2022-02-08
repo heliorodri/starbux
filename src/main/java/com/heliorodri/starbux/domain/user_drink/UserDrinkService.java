@@ -1,5 +1,6 @@
 package com.heliorodri.starbux.domain.user_drink;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +10,7 @@ public class UserDrinkService {
 
     private final UserDrinkRepository repository;
 
-    public UserDrink save(UserDrink userDrink) {
+    public UserDrink save(@NonNull UserDrink userDrink) {
         return repository.save(userDrink);
     }
 

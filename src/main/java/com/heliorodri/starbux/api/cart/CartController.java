@@ -30,7 +30,7 @@ public class CartController {
     private final AuthenticationService authService;
 
     @PostMapping("/add")
-    public ResponseEntity<CartItemsDto> add(@RequestParam("token") String token, @RequestBody CartItemRequest dto) {
+    public ResponseEntity<CompleteCartDto> add(@RequestParam("token") String token, @RequestBody CartItemRequest dto) {
         try {
             authService.authenticate(token);
             User user = authService.findUserByToken(token);
@@ -43,7 +43,7 @@ public class CartController {
     }
 
     @GetMapping()
-    public ResponseEntity<CartItemsDto> getCart(@RequestParam("token") String token) {
+    public ResponseEntity<CompleteCartDto> getCart(@RequestParam("token") String token) {
         try {
             authService.authenticate(token);
             User user = authService.findUserByToken(token);
@@ -56,7 +56,7 @@ public class CartController {
     }
 
     @PostMapping("/update-item")
-    public ResponseEntity<CartItemsDto> updateItem(@RequestParam("token") String token, @RequestBody CartItemRequest request) {
+    public ResponseEntity<CompleteCartDto> updateItem(@RequestParam("token") String token, @RequestBody CartItemRequest request) {
         try {
             authService.authenticate(token);
             User user = authService.findUserByToken(token);
@@ -68,13 +68,13 @@ public class CartController {
         }
     }
 
-    @DeleteMapping("/delete-item/{itemId}")
-    public ResponseEntity<CartItemsDto> deleteItem(@RequestParam("token") String token, @PathVariable Long itemId) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<CompleteCartDto> deleteItem(@RequestParam("token") String token, @PathVariable Long id) {
         try {
             authService.authenticate(token);
             User user = authService.findUserByToken(token);
 
-            return new ResponseEntity<>(service.deleteItem(itemId, user), NO_CONTENT);
+            return new ResponseEntity<>(service.deleteById(id, user), NO_CONTENT);
         } catch (Exception e) {
             log.error(e.getMessage());
             return ResponseEntity.badRequest().build();

@@ -2,6 +2,7 @@ package com.heliorodri.starbux.domain.authentication;
 
 import com.heliorodri.starbux.domain.exception.InvalidOperationException;
 import com.heliorodri.starbux.domain.user.User;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -12,15 +13,15 @@ public class AuthenticationService {
 
     private final AuthenticationRepository repository;
 
-    public Authentication saveToken(Authentication authentication){
+    public Authentication saveToken(@NonNull Authentication authentication){
         return repository.save(authentication);
     }
 
-    public Authentication findByUser(User user) {
+    public Authentication findByUser(@NonNull User user) {
         return repository.findByUser(user);
     }
 
-    public User findUserByToken(String token) {
+    public User findUserByToken(@NonNull String token) {
         Authentication authentication = repository.findByToken(token);
 
         return (authentication != null && authentication.getUser() != null)
@@ -28,7 +29,7 @@ public class AuthenticationService {
                 : null;
     }
 
-    public void authenticate(String token) {
+    public void authenticate(@NonNull String token) {
         if (!StringUtils.hasText(token)) {
             throw new InvalidOperationException("Invalid Token. Authentication denied");
         }

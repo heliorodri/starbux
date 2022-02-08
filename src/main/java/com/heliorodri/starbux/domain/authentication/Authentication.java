@@ -2,6 +2,7 @@ package com.heliorodri.starbux.domain.authentication;
 
 import com.heliorodri.starbux.domain.user.User;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,10 +19,11 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "auth_user_cart")
+@Builder
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class Authentication {
 
     @Id

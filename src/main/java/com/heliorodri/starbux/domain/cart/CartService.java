@@ -1,11 +1,12 @@
 package com.heliorodri.starbux.domain.cart;
 
 import com.heliorodri.starbux.api.cart.CartItemDto;
-import com.heliorodri.starbux.api.cart.CartItemsDto;
+import com.heliorodri.starbux.api.cart.CompleteCartDto;
 import com.heliorodri.starbux.api.cart.CartMapper;
 import com.heliorodri.starbux.api.topping.ToppingDto;
 import com.heliorodri.starbux.domain.user.User;
 import com.heliorodri.starbux.domain.user_drink.UserDrinkService;
+import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,11 +19,12 @@ import java.util.stream.Collectors;
 @Slf4j
 public class CartService {
 
+    public static final double DISCOUNT_PERCENTAGE = 0.25;
     private final CartRepository repository;
     private final CartMapper mapper;
     private final UserDrinkService userDrinkService;
 
-    public CartItemsDto addProduct(Cart cart) {
+    public CompleteCartDto addProduct(Cart cart) {
         userDrinkService.save(cart.getUserDrink());
         repository.save(cart);
         log.info("order added to cart");
@@ -30,9 +32,11 @@ public class CartService {
         return listItems(cart.getUser());
     }
 
-    public CartItemsDto updateItem(Cart cart, User user) {
+    public CompleteCartDto updateItem(Cart cart, User user) {
         Cart itemToUpdate = repository.getById(cart.getId());
         itemToUpdate.setQuantity(cart.getQuantity());
+        itemToUpdate.getUserDrink().setToppings(cart.getUserDrink().getToppings());
+        itemToUpdate.getUserDrink().setDrink(cart.getUserDrink().getDrink());
 
         userDrinkService.save(cart.getUserDrink());
         repository.save(itemToUpdate);
@@ -41,25 +45,31 @@ public class CartService {
         return listItems(user);
     }
 
-    public CartItemsDto deleteItem(Long itemId, User user) {
-        if (!repository.existsById(itemId)) {
+    public CompleteCartDto deleteById(Long id, User user) {
+        if (!repository.existsById(id)) {
             throw new RuntimeException("Item not found");
         }
 
-        repository.deleteById(itemId);
+        repository.deleteById(id);
 
         return listItems(user);
     }
 
-    public CartItemsDto listItems(User user) {
+    public CompleteCartDto listItems(User user) {
+        List<CartItemDto> cartItemsDto = new ArrayList<>();
+        double totalCost = 0;
+        double totalAfterDiscount = 0;
+
         List<Cart> cartItems = repository.findByUserOrderByIdDesc(user);
-        List<CartItemDto> cartItemsDto = cartItems.stream().map(mapper::toDto).collect(Collectors.toList());
+        
+        if (!cartItems.isEmpty()) {
+            cartItemsDto = cartItems.stream().map(mapper::toDto).collect(Collectors.toList());
+            totalCost = getTotalCost(cartItemsDto);
+            totalAfterDiscount = getTotalAfterDiscount(cartItemsDto, totalCost);
+        }
 
-        double totalCost = getTotalCost(cartItemsDto);
-        double totalAfterDiscount = getTotalAfterDiscount(cartItemsDto, totalCost);
-
-        return CartItemsDto.builder()
-                .cartItems(cartItemsDto)
+        return CompleteCartDto.builder()
+                .cartItems(cartItemsDto.isEmpty() ? List.of() : cartItemsDto)
                 .totalCost(totalCost)
                 .totalAfterDiscount(totalAfterDiscount)
                 .build();
@@ -89,19 +99,25 @@ public class CartService {
             return drink_price + toppings_total;
         }).min().orElseThrow();
 
-        var total_percent_discount = totalCost - (totalCost * (25/100));
+        var total_percent_discount = totalCost - (totalCost * DISCOUNT_PERCENTAGE);
         var total_lowest_price_discount = totalCost - lowest_price;
 
         if (totalCost > 12 && cart.size() < 3) {
             return total_percent_discount;
         }
 
-        if (totalCost < 12 && cart.size() >= 3) {
+        if (totalCost <= 12 && cart.size() >= 3) {
             return total_lowest_price_discount;
         }
 
-        return Math.min(total_lowest_price_discount, total_percent_discount);
+        if (totalCost > 12 && cart.size() >= 3) {
+            return Math.max(total_lowest_price_discount, total_percent_discount);
+        }
+
+        return totalCost;
 
     }
 
 }
+
+

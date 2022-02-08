@@ -8,7 +8,6 @@ import com.heliorodri.starbux.domain.user.UserRepository;
 import com.heliorodri.starbux.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,8 +56,8 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<UserResponse> signUp(@RequestBody @Valid UserDto dto) {
         try {
-            User userToSignUp = mapper.toEntityRequest(dto);
-            return new ResponseEntity<>(mapper.toReponse(service.signUp(userToSignUp)), OK);
+            User userToSignUp = mapper.toEntity(dto);
+            return new ResponseEntity<>(mapper.toResponse(service.signUp(userToSignUp)), OK);
         } catch (Exception e) {
             log.error(e.getMessage());
             return ResponseEntity.badRequest().build();
@@ -68,7 +67,7 @@ public class UserController {
     @PostMapping("/signin")
     public ResponseEntity<String> signIn(@RequestBody @Valid UserSignInRequest dto) {
         try {
-            final User userToSignIn = mapper.toEntityRequest(dto);
+            final User userToSignIn = mapper.toEntity(dto);
             return new ResponseEntity<>(service.signIn(userToSignIn), OK);
         } catch (NoSuchAlgorithmException | InvalidOperationException e) {
             log.error(e.getMessage());

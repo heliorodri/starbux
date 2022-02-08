@@ -1,20 +1,16 @@
 package com.heliorodri.starbux.domain.drink;
 
-import com.heliorodri.starbux.domain.topping.Topping;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Entity
 @Builder
@@ -33,8 +29,5 @@ public class Drink {
 
     @NotNull
     private Double price;
-
-    @OneToMany
-    private List<Topping> toppings;
 
 }
