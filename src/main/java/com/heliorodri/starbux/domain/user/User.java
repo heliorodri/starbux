@@ -14,7 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "cart_user")
+@Table(name = "user_cart")
 @Builder
 @Getter
 @Setter

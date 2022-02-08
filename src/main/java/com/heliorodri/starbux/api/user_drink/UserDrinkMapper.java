@@ -20,7 +20,7 @@ public class UserDrinkMapper {
     public UserDrink toEntity(UserDrinkDto dto) {
         return UserDrink.builder()
                 .id(dto.getId())
-                .user(userMapper.toEntity(dto.getUser()))
+                .user(userMapper.toEntityRequest(dto.getUser()))
                 .drink(drinkMapper.toEntity(dto.getDrink()))
                 .toppings(dto.getToppings().stream().map(toppingMapper::toEntity).collect(Collectors.toList()))
                 .build();

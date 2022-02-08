@@ -4,6 +4,7 @@ import com.heliorodri.starbux.domain.authentication.AuthenticationService;
 import com.heliorodri.starbux.domain.cart.CartService;
 import com.heliorodri.starbux.domain.user.User;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ import static org.springframework.http.HttpStatus.OK;
 @RestController
 @RequestMapping("/cart")
 @RequiredArgsConstructor
+@Slf4j
 public class CartController {
 
     private final CartService service;
@@ -28,35 +30,55 @@ public class CartController {
     private final AuthenticationService authService;
 
     @PostMapping("/add")
-    public ResponseEntity<CartItemsDto> add(@RequestBody CartItemRequest dto, @RequestParam("token") String token) {
-        authService.authenticate(token);
-        User user = authService.findUserByToken(token);
+    public ResponseEntity<CartItemsDto> add(@RequestParam("token") String token, @RequestBody CartItemRequest dto) {
+        try {
+            authService.authenticate(token);
+            User user = authService.findUserByToken(token);
 
-        return new ResponseEntity<>(service.addProduct(mapper.toEntity(dto, user)), CREATED);
+            return new ResponseEntity<>(service.addProduct(mapper.toEntity(dto, user)), CREATED);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @GetMapping()
     public ResponseEntity<CartItemsDto> getCart(@RequestParam("token") String token) {
-        authService.authenticate(token);
-        User user = authService.findUserByToken(token);
+        try {
+            authService.authenticate(token);
+            User user = authService.findUserByToken(token);
 
-        return new ResponseEntity<>(service.listItems(user), OK);
+            return new ResponseEntity<>(service.listItems(user), OK);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PostMapping("/update-item")
     public ResponseEntity<CartItemsDto> updateItem(@RequestParam("token") String token, @RequestBody CartItemRequest request) {
-        authService.authenticate(token);
-        User user = authService.findUserByToken(token);
+        try {
+            authService.authenticate(token);
+            User user = authService.findUserByToken(token);
 
-        return new ResponseEntity<>(service.updateItem(mapper.toEntity(request, user), user), OK);
+            return new ResponseEntity<>(service.updateItem(mapper.toEntity(request, user), user), OK);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @DeleteMapping("/delete-item/{itemId}")
     public ResponseEntity<CartItemsDto> deleteItem(@RequestParam("token") String token, @PathVariable Long itemId) {
-        authService.authenticate(token);
-        User user = authService.findUserByToken(token);
+        try {
+            authService.authenticate(token);
+            User user = authService.findUserByToken(token);
 
-        return new ResponseEntity<>(service.deleteItem(itemId, user), NO_CONTENT);
+            return new ResponseEntity<>(service.deleteItem(itemId, user), NO_CONTENT);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
     }
 
 

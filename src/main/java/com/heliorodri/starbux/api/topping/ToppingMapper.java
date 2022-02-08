@@ -13,6 +13,17 @@ public class ToppingMapper {
         return dtos.stream().map(this::toEntity).collect(Collectors.toList());
     }
 
+    public List<ToppingDto> toDtoList(List<Topping> entities) {
+        return entities.stream().map(this::toDto).collect(Collectors.toList());
+    }
+
+    public Topping toEntity(ToppingCreateRequest request) {
+        return Topping.builder()
+                .name(request.getName())
+                .price(request.getPrice())
+                .build();
+    }
+
     public Topping toEntity(ToppingDto dto) {
         return Topping.builder()
                 .id(dto.getId())

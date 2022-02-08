@@ -20,7 +20,7 @@ dependencies {
 	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 	implementation group: 'org.postgresql', name: 'postgresql', version: '42.3.2'
 
-	compileOnly "org.flywaydb:flyway-core:8.4.4"
+	//compileOnly "org.flywaydb:flyway-core:8.4.4"
 
 	compileOnly 'org.projectlombok:lombok:1.18.22'
 	annotationProcessor 'org.projectlombok:lombok:1.18.22'

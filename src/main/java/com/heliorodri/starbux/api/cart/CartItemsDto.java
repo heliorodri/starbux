@@ -14,5 +14,6 @@ public class CartItemsDto {
 
     private List<CartItemDto> cartItems;
     private double totalCost;
+    private double totalAfterDiscount;
 
 }

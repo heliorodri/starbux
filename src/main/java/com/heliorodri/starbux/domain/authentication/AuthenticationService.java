@@ -1,5 +1,6 @@
 package com.heliorodri.starbux.domain.authentication;
 
+import com.heliorodri.starbux.domain.exception.InvalidOperationException;
 import com.heliorodri.starbux.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,11 +30,11 @@ public class AuthenticationService {
 
     public void authenticate(String token) {
         if (!StringUtils.hasText(token)) {
-            throw new RuntimeException("Invalid Token. Authentication denied");
+            throw new InvalidOperationException("Invalid Token. Authentication denied");
         }
 
         if (findUserByToken(token) == null) {
-            throw new RuntimeException("Authentication denied! User not found");
+            throw new InvalidOperationException("Authentication denied! User not found");
         }
     }
 

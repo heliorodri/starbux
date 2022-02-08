@@ -14,6 +14,13 @@ public class DrinkMapper {
                 .build();
     }
 
+    public Drink toEntity(DrinkCreateRequest request) {
+        return Drink.builder()
+                .name(request.getName())
+                .price(request.getPrice())
+                .build();
+    }
+
     public DrinkDto toDto(Drink drink) {
         return DrinkDto.builder()
                 .id(drink.getId())
