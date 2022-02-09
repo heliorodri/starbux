@@ -1,16 +1,6 @@
 version: '3.1'
 
 services:
-  starbux-server:
-    container_name: starbux
-    build:
-      context: docker-starbux
-      dockerfile: Dockerfile
-    image: starbux:latest
-    ports:
-      - 8080:8080
-    networks:
-      - spring-cloud-network
   db:
     image: postgres
     environment:
@@ -18,3 +8,10 @@ services:
       POSTGRES_PASSWORD: root
     ports:
       - "5452:5432"
+
+  starbux:
+    build: .
+    ports:
+      - "8080:8080"
+    image: "starbux:latest"
+    network_mode: "host"
