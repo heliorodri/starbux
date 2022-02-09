@@ -30,6 +30,8 @@ if you are using intellij you can run it inside the terminal of the IDE.
     - *We are creating an ADMIN*
 
 
+
+
       {
           "email": "test@mail.com",
           "name": "test",
