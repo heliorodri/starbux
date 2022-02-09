@@ -7,6 +7,7 @@ import com.heliorodri.starbux.api.topping.ToppingDto;
 import com.heliorodri.starbux.domain.user.User;
 import com.heliorodri.starbux.domain.user_drink.UserDrinkService;
 import java.util.ArrayList;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,7 @@ public class CartService {
     private final CartMapper mapper;
     private final UserDrinkService userDrinkService;
 
-    public CompleteCartDto addProduct(Cart cart) {
+    public CompleteCartDto addProduct(@NonNull Cart cart) {
         userDrinkService.save(cart.getUserDrink());
         repository.save(cart);
         log.info("order added to cart");
@@ -32,7 +33,7 @@ public class CartService {
         return listItems(cart.getUser());
     }
 
-    public CompleteCartDto updateItem(Cart cart, User user) {
+    public CompleteCartDto updateItem(@NonNull Cart cart, @NonNull User user) {
         Cart itemToUpdate = repository.getById(cart.getId());
         itemToUpdate.setQuantity(cart.getQuantity());
         itemToUpdate.getUserDrink().setToppings(cart.getUserDrink().getToppings());
@@ -45,7 +46,7 @@ public class CartService {
         return listItems(user);
     }
 
-    public CompleteCartDto deleteById(Long id, User user) {
+    public CompleteCartDto deleteById(@NonNull Long id, @NonNull User user) {
         if (!repository.existsById(id)) {
             throw new RuntimeException("Item not found");
         }

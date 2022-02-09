@@ -1,6 +1,16 @@
 version: '3.1'
 
 services:
+  starbux-server:
+    container_name: starbux
+    build:
+      context: docker-starbux
+      dockerfile: Dockerfile
+    image: starbux:latest
+    ports:
+      - 8080:8080
+    networks:
+      - spring-cloud-network
   db:
     image: postgres
     environment:
