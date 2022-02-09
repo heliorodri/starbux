@@ -24,4 +24,8 @@ public class ToppingService {
         return repository.findAll();
     }
 
+    public Topping findById(@NonNull Long id) {
+        return repository.findById(id).orElseThrow();
+    }
+
 }
