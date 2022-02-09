@@ -116,9 +116,9 @@ and the cost after applying the discount*
 
 - If you need to update and item you need to send a `post`
   to `/cart/update-item/` and send the body of your drink
-- and also you send the id of you cart item
-- and, as always, you need to send the `token`
-- here is an example
+  - you also need to send the id of you cart item
+  - and, as always, you need to send the `token`
+- here is an example of payload
 
 ```
 {
