@@ -43,12 +43,12 @@ if you are using intellij you can run it inside the terminal of the IDE.
     - Using the `/user/signin` endpoint
     - This is how the payload is (you should use your data):
 
-
-      {
-        "email": "test@mail.com",
-        "password": "pass"
-      }
-
+```
+{
+  "email": "test@mail.com",
+  "password": "pass"
+}
+```
 
 ### After signing in we need to get the token that it generates to use for another requests
 
@@ -62,10 +62,12 @@ if you are using intellij you can run it inside the terminal of the IDE.
     - Here is an example of payload:
 
 
-      {
-        "name": "water",
-        "price": 1
-      }
+```
+{
+  "name": "water",
+  "price": 1
+}
+```
 
 - Deleting
     - you need to use the endpoint `/drinks/{id}`.
@@ -82,29 +84,28 @@ if you are using intellij you can run it inside the terminal of the IDE.
     - you need to send the `body` and the `token`
     - this is an example of payload:
 
-
-      {
-        "quantity": 1,
-        "drink": {
-          "id": 1,
-          "name": "water",
-          "price": 1
-        },
-        "toppings": [
-          {
-            "id": 1,
-            "name": "milk",
-            "price": 1
-          },
-          {
-            "id": 2,
-            "name": "Lemon",
-            "price": 1
-          }
-        ]
-      } 
-
-
+```
+{
+  "quantity": 1,
+  "drink": {
+    "id": 1,
+    "name": "water",
+    "price": 1
+  },
+  "toppings": [
+    {
+      "id": 1,
+      "name": "milk",
+      "price": 1
+    },
+    {
+      "id": 2,
+      "name": "Lemon",
+      "price": 1
+    }
+  ]
+} 
+```
 *After adding a product, the return will show you the complete cart with the total cost
 and the cost after applying the discount*
 
@@ -119,20 +120,21 @@ and the cost after applying the discount*
 - and, as always, you need to send the `token`
 - here is an example
 
-
-      {
-        "id": 1,
-        "drink": {
-          "id": 1,
-          "name": "water",
-          "price": 1
-        },
-        "toppings": [
-          {
-          "id": 1,
-          "name": "milk",
-          "price": 1
-          }
-        ],
-        "quantity": 2,
-      }
+```
+{
+  "id": 1,
+  "drink": {
+    "id": 1,
+    "name": "water",
+    "price": 1
+  },
+  "toppings": [
+    {
+    "id": 1,
+    "name": "milk",
+    "price": 1
+    }
+  ],
+  "quantity": 2,
+}
+```
