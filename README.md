@@ -30,22 +30,23 @@ if you are using intellij you can run it inside the terminal of the IDE.
     - *We are creating an ADMIN*
 
 
-    {
-        "email": "test@mail.com",
-        "name": "test",
-        "password": "pass",
-        "role": "ADMIN"
-    }
+      {
+          "email": "test@mail.com",
+          "name": "test",
+          "password": "pass",
+          "role": "ADMIN"
+      }
 
 - After signing up we should signIn
     - Using the `/user/signin` endpoint
     - This is how the payload is (you should use your data):
 
 
-    {
-      "email": "test@mail.com",
-      "password": "pass"
-    }
+      {
+        "email": "test@mail.com",
+        "password": "pass"
+      }
+
 
 ### After signing in we need to get the token that it generates to use for another requests
 
@@ -59,10 +60,10 @@ if you are using intellij you can run it inside the terminal of the IDE.
     - Here is an example of payload:
 
 
-    {
-      "name": "water",
-      "price": 1
-    }
+      {
+        "name": "water",
+        "price": 1
+      }
 
 - Deleting
     - you need to use the endpoint `/drinks/{id}`.
@@ -80,26 +81,26 @@ if you are using intellij you can run it inside the terminal of the IDE.
     - this is an example of payload:
 
 
-    {
-      "quantity": 1,
-      "drink": {
-        "id": 1,
-        "name": "water",
-        "price": 1
-      },
-      "toppings": [
-        {
+      {
+        "quantity": 1,
+        "drink": {
           "id": 1,
-          "name": "milk",
+          "name": "water",
           "price": 1
         },
-        {
-          "id": 2,
-          "name": "Lemon",
-          "price": 1
-        }
-      ]
-    } 
+        "toppings": [
+          {
+            "id": 1,
+            "name": "milk",
+            "price": 1
+          },
+          {
+            "id": 2,
+            "name": "Lemon",
+            "price": 1
+          }
+        ]
+      } 
 
 
 *After adding a product, the return will show you the complete cart with the total cost
@@ -117,19 +118,19 @@ and the cost after applying the discount*
 - here is an example
 
 
-    {
-      "id": 1,
-      "drink": {
+      {
         "id": 1,
-        "name": "water",
-        "price": 1
-      },
-      "toppings": [
-        {
-        "id": 1,
-        "name": "milk",
-        "price": 1
-        }
-      ],
-      "quantity": 2,
-    }
+        "drink": {
+          "id": 1,
+          "name": "water",
+          "price": 1
+        },
+        "toppings": [
+          {
+          "id": 1,
+          "name": "milk",
+          "price": 1
+          }
+        ],
+        "quantity": 2,
+      }
